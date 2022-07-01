@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "start": "nodemon ./index.js"
+    "start": "nodemon src/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -12,7 +12,8 @@
     "joi": "^17.6.0",
     "mongodb": "^4.7.0",
     "node": "^18.4.0",
-    "nodemon": "^2.0.18"
+    "nodemon": "^2.0.18",
+    "uuid": "^8.3.2"
   },
   "name": "projeto13-mywallet-back",
   "version": "1.0.0",
