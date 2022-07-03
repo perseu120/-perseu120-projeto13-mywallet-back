@@ -19,7 +19,10 @@ export async function login(req, res){
     }
   
     const user = await db.collection('usuarios').findOne({ email: usuario.email });
-  
+    if(!user){
+      res.status(404).send("Email não cadastrado");
+      return;
+    }
     if (user && bcrypt.compareSync(usuario.senha, user.senha)) {
       const token = uuid();
   
@@ -27,10 +30,15 @@ export async function login(req, res){
         token,
         userId: user._id
       });
-  
-      return res.status(201).send({ token });
+      delete user.senha;
+      
+      // { descricao: "almoço", valor: 200, type: "saida"} formato do objeto que deve ser enviado para adicionar entrada e saida
+
+      const dadosUsuario ={ ...user, token }
+
+      return res.status(200).send(dadosUsuario );
     } else {
-      return res.status(401).send('Senha ou email incorretos!');
+      return res.status(401).send('Senha incorreta!');
     }
 }
 
@@ -45,6 +53,7 @@ export async function  cadastroUsuario(req, res){
       }
 
   const senhaCriptografada = bcrypt.hashSync(user.senha, 10);
-  await db.collection('usuarios').insertOne({ ...user, senha: senhaCriptografada}) 
+  const movimentacao = [];
+  await db.collection('usuarios').insertOne({ ...user, senha: senhaCriptografada, movimentacao: movimentacao}) 
   res.sendStatus(201);
 }
