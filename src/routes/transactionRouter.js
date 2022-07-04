@@ -1,10 +1,12 @@
 import express from "express";
-import {movimentacao} from "../controllers/transactionController.js"
+import {getuser, movimentacao, getMovimentacao} from "../controllers/transactionController.js"
 
 const transactionRouter = express.Router();
 
 transactionRouter.post("/movimentacao", movimentacao);
 
-// transactionRouter.get("/user", getuser );
+transactionRouter.get("/movimentacao", getMovimentacao );
+
+transactionRouter.get("/user", getuser );
 
 export default transactionRouter;
